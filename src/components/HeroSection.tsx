@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import heroVideo from '@/assets/hero-video.mp4';
 import heroBg from '@/assets/hero-bg.jpg';
 
 const HeroSection = () => {
@@ -53,14 +54,20 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster={heroBg}
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/50 to-background" />
       
       {/* Animated Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-fire/5 via-transparent to-ice/5 animate-pulse" />
