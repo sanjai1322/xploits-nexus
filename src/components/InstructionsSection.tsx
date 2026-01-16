@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
 import { Users, Calendar, FileCheck, BookOpen, Phone } from 'lucide-react';
+import { ScrollAnimationWrapper, StaggerContainer, StaggerItem } from './ScrollAnimationWrapper';
 
 const instructions = [
   {
@@ -38,49 +38,40 @@ const InstructionsSection = () => {
   return (
     <section className="py-20 px-4 relative">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
+        <ScrollAnimationWrapper animation="fadeUp" className="text-center mb-12">
           <h2 className="section-title text-gradient-fire-ice">
             Quick Info
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Everything you need to know before registering
           </p>
-        </motion.div>
+        </ScrollAnimationWrapper>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {instructions.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`glass-card p-6 text-center transition-all duration-300 ${
-                item.variant === 'fire' ? 'hover-card-fire' : 'hover-card-ice'
-              }`}
-            >
-              <div className={`inline-flex p-3 rounded-xl mb-4 ${
-                item.variant === 'fire' 
-                  ? 'bg-fire/10 text-fire' 
-                  : 'bg-ice/10 text-ice'
-              }`}>
-                <item.icon className="w-6 h-6" />
+            <StaggerItem key={index}>
+              <div
+                className={`glass-card p-6 text-center transition-all duration-300 h-full ${
+                  item.variant === 'fire' ? 'hover-card-fire' : 'hover-card-ice'
+                }`}
+              >
+                <div className={`inline-flex p-3 rounded-xl mb-4 ${
+                  item.variant === 'fire' 
+                    ? 'bg-fire/10 text-fire' 
+                    : 'bg-ice/10 text-ice'
+                }`}>
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <h3 className="font-heading font-semibold text-foreground mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {item.description}
+                </p>
               </div>
-              <h3 className="font-heading font-semibold text-foreground mb-2">
-                {item.title}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {item.description}
-              </p>
-            </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
