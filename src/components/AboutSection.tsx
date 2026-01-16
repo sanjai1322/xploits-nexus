@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { ScrollAnimationWrapper, StaggerContainer, StaggerItem } from './ScrollAnimationWrapper';
 
 const AboutSection = () => {
   return (
@@ -9,13 +9,7 @@ const AboutSection = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Visual Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
+          <ScrollAnimationWrapper animation="fadeLeft" duration={0.8}>
             <div className="aspect-square relative">
               {/* Abstract Tech Visual */}
               <div className="absolute inset-0 glass-card overflow-hidden">
@@ -33,15 +27,10 @@ const AboutSection = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </ScrollAnimationWrapper>
 
           {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <ScrollAnimationWrapper animation="fadeRight" duration={0.8}>
             <h2 className="section-title mb-6">
               About <span className="text-gradient-fire">SMVEC</span> & 
               <span className="text-gradient-ice"> IT Department</span>
@@ -65,23 +54,25 @@ const AboutSection = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-8">
+            <StaggerContainer className="grid grid-cols-3 gap-4 mt-8" staggerDelay={0.15}>
               {[
                 { value: '20+', label: 'Years of Excellence' },
                 { value: '500+', label: 'Expected Participants' },
                 { value: '15+', label: 'Technical Events' },
               ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className={`text-2xl md:text-3xl font-heading font-bold ${
-                    index % 2 === 0 ? 'text-fire' : 'text-ice'
-                  }`}>
-                    {stat.value}
+                <StaggerItem key={index}>
+                  <div className="text-center">
+                    <div className={`text-2xl md:text-3xl font-heading font-bold ${
+                      index % 2 === 0 ? 'text-fire' : 'text-ice'
+                    }`}>
+                      {stat.value}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
-          </motion.div>
+            </StaggerContainer>
+          </ScrollAnimationWrapper>
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Cpu, BookOpen } from 'lucide-react';
 import { competitions, hackathons, workshops } from '@/data/events';
+import { ScrollAnimationWrapper, StaggerContainer, StaggerItem } from './ScrollAnimationWrapper';
 
 const categories = [
   {
@@ -40,31 +40,19 @@ const EventsSection = () => {
   return (
     <section className="py-20 px-4 relative">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
+        <ScrollAnimationWrapper animation="fadeUp" className="text-center mb-16">
           <h2 className="section-title">
             <span className="text-gradient-fire">Technical</span> Events
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Compete in diverse challenges designed to test your skills across multiple domains
           </p>
-        </motion.div>
+        </ScrollAnimationWrapper>
 
         {/* Category Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {categories.map((category, index) => (
-            <motion.div
-              key={category.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
+        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12" staggerDelay={0.15}>
+          {categories.map((category) => (
+            <StaggerItem key={category.id}>
               <Link
                 to={`/events/category/${category.id}`}
                 className={`block glass-card p-6 h-full transition-all duration-300 group ${
@@ -125,38 +113,34 @@ const EventsSection = () => {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
-            </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
 
         {/* Featured Events Ticker */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="glass-card p-6"
-        >
-          <h3 className="text-lg font-heading font-bold mb-4 text-center">
-            ⚡ Featured Events
-          </h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            {[...competitions.slice(0, 2), ...hackathons.slice(0, 2), ...workshops.slice(0, 2)].map((event) => (
-              <Link
-                key={event.id}
-                to={`/events/${event.id}`}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
-                  event.variant === 'fire' 
-                    ? 'bg-fire/10 hover:bg-fire/20 text-fire border border-fire/20' 
-                    : 'bg-ice/10 hover:bg-ice/20 text-ice border border-ice/20'
-                }`}
-              >
-                <span>{event.icon}</span>
-                <span className="font-medium text-sm">{event.name}</span>
-              </Link>
-            ))}
+        <ScrollAnimationWrapper animation="scale" delay={0.2}>
+          <div className="glass-card p-6">
+            <h3 className="text-lg font-heading font-bold mb-4 text-center">
+              ⚡ Featured Events
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4">
+              {[...competitions.slice(0, 2), ...hackathons.slice(0, 2), ...workshops.slice(0, 2)].map((event) => (
+                <Link
+                  key={event.id}
+                  to={`/events/${event.id}`}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full transition-all ${
+                    event.variant === 'fire' 
+                      ? 'bg-fire/10 hover:bg-fire/20 text-fire border border-fire/20' 
+                      : 'bg-ice/10 hover:bg-ice/20 text-ice border border-ice/20'
+                  }`}
+                >
+                  <span>{event.icon}</span>
+                  <span className="font-medium text-sm">{event.name}</span>
+                </Link>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </ScrollAnimationWrapper>
       </div>
     </section>
   );
